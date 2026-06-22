@@ -127,7 +127,7 @@ function ActivityCard({ activity, taskId, tracking, onTrackingChange }) {
           <p className="text-sm font-sans font-medium text-[var(--text)] leading-snug">{activity.title}</p>
           {!open && activity.subActivities.length > 0 && (
             <p className="text-[10px] text-[var(--text-muted)] mt-0.5 font-sans">
-              {activity.subActivities.length} sub-activities · {comments.length} {comments.length === 1 ? 'comment' : 'comments'}
+              {activity.subActivities.length} sub-activities | {comments.length} {comments.length === 1 ? 'comment' : 'comments'}
             </p>
           )}
         </div>
@@ -156,7 +156,6 @@ function ActivityCard({ activity, taskId, tracking, onTrackingChange }) {
                   <ul className="space-y-1.5">
                     {activity.subActivities.map((sub, i) => (
                       <li key={i} className="flex items-start gap-2 text-xs text-[var(--text)] font-sans leading-relaxed">
-                        <span className="text-[#B8943A] mt-0.5 flex-shrink-0">•</span>
                         <span>{sub}</span>
                       </li>
                     ))}
@@ -396,9 +395,9 @@ export function TaskDetailPage() {
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-                  {task.timeframe && <span className="text-[10px] text-white/60 font-sans">📅 {task.timeframe}</span>}
-                  {task.responsibility && <span className="text-[10px] text-white/60 font-sans">👥 {task.responsibility}</span>}
-                  {task.budget && <span className="text-[10px] text-white/60 font-sans">💰 {task.budget}</span>}
+                  {task.timeframe && <span className="text-[10px] text-white/60 font-sans">{task.timeframe}</span>}
+                  {task.responsibility && <span className="text-[10px] text-white/60 font-sans">{task.responsibility}</span>}
+                  {task.budget && <span className="text-[10px] text-white/60 font-sans">{task.budget}</span>}
                   {activities.length > 0 && (
                     <span className="flex items-center gap-1 text-[10px] text-white/60 font-sans">
                       <Zap size={10} className="text-[#B8943A]" /> {activities.length} Activities

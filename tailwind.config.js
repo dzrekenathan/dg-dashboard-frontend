@@ -21,7 +21,7 @@ module.exports = {
         line:  '#E6EAF0',
       },
       fontFamily: {
-        sans:  ['Inter', 'sans-serif'],
+        sans:  ['Plus Jakarta Sans', 'sans-serif'],
         serif: ['Playfair Display', 'serif'],
       },
     },
