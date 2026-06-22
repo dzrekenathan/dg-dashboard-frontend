@@ -1,4 +1,4 @@
-import { useState } from 'react'
+﻿import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { Eye, EyeOff, ShieldCheck, BookOpen, Users } from 'lucide-react'
@@ -55,7 +55,7 @@ export function LoginPage() {
 
         {/* Centre: headline */}
         <div className="relative z-10 mt-16 mb-12">
-          <h1 className="font-serif font-bold text-white text-5xl leading-tight max-w-lg">
+          <h1 className="font-sans font-bold text-white text-5xl leading-tight max-w-lg">
             Strategic oversight of CLET's implementation goals.
           </h1>
           <p className="mt-5 text-white/60 text-base font-sans leading-relaxed max-w-md">
@@ -101,7 +101,7 @@ export function LoginPage() {
               onError={e => { e.currentTarget.style.display = 'none' }}
             />
             <div>
-              <p className="font-serif font-bold text-[#0A1F3D] dark:text-white text-sm leading-none">CLET M&amp;E Dashboard</p>
+              <p className="font-sans font-bold text-[#0A1F3D] dark:text-white text-sm leading-none">CLET M&amp;E Dashboard</p>
               <p className="text-[10px] text-[#B8943A] font-sans mt-0.5">Authorised institutional access</p>
             </div>
           </div>
@@ -113,7 +113,7 @@ export function LoginPage() {
           <p className="text-[10px] font-bold text-[#B8943A] uppercase tracking-[0.18em] font-sans mb-2">
             Secure Institutional Access
           </p>
-          <h2 className="font-serif font-bold text-[#0A1F3D] dark:text-white text-3xl mb-2">Sign in</h2>
+          <h2 className="font-sans font-bold text-[#0A1F3D] dark:text-white text-3xl mb-2">Sign in</h2>
           <p className="text-xs text-[#6B7280] dark:text-white/50 font-sans leading-relaxed mb-7">
             Use your authorised CLET account to access the monitoring portal and programme dashboards.
           </p>

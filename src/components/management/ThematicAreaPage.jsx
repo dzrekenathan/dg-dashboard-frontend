@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+﻿import { useMemo } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Zap } from 'lucide-react'
@@ -38,7 +38,7 @@ function TaskCard({ task, idx, onClick }) {
                 {task.reference_numbers.replace(/\n/g, ' · ')}
               </p>
             )}
-            <h4 className="font-serif font-semibold text-[var(--text)] text-sm leading-snug">{task.task}</h4>
+            <h4 className="font-sans font-semibold text-[var(--text)] text-sm leading-snug">{task.task}</h4>
             {(task.timeframe || task.responsibility) && (
               <p className="text-[10px] text-[var(--text-muted)] font-sans mt-0.5">
                 {task.timeframe && <span>📅 {task.timeframe}</span>}
@@ -144,7 +144,7 @@ export function ThematicAreaPage() {
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
                 <span className="font-mono text-[11px] font-bold text-[#B8943A] tracking-widest">{abbrev}</span>
-                <h2 className="font-serif font-bold text-white text-base leading-snug mt-0.5 max-w-xl">{areaLabel}</h2>
+                <h2 className="font-sans font-bold text-white text-base leading-snug mt-0.5 max-w-xl">{areaLabel}</h2>
                 <p className="text-xs text-white/50 font-sans mt-1">
                   {areaTasks.length} {areaTasks.length === 1 ? 'task' : 'tasks'} · {completed} completed · {progress_pct}% overall progress
                 </p>

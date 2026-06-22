@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+﻿import { useMemo, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Upload, Download, Eye, EyeOff, ArrowRight, CheckCircle2, AlertTriangle } from 'lucide-react'
@@ -43,7 +43,7 @@ function AreaCard({ group, idx, soNumber, onClick }) {
       <div className="p-4 flex items-start gap-3">
         <ProgressRing value={progress_pct} size={52} strokeWidth={5} className="flex-shrink-0 mt-0.5" />
         <div className="flex-1 min-w-0">
-          <p className="font-serif font-semibold text-[var(--text)] text-sm leading-snug line-clamp-2 mb-2">
+          <p className="font-sans font-semibold text-[var(--text)] text-sm leading-snug line-clamp-2 mb-2">
             {areaLabel}
           </p>
           <div className="flex flex-wrap gap-x-3 gap-y-1">
@@ -52,7 +52,7 @@ function AreaCard({ group, idx, soNumber, onClick }) {
               ['In Progress', in_progress, 'text-[#B8943A]'],
             ].map(([label, val, cls]) => (
               <span key={label} className="flex items-baseline gap-1">
-                <span className={`text-xs font-bold font-serif ${cls}`}>{val}</span>
+                <span className={`text-xs font-bold font-sans ${cls}`}>{val}</span>
                 <span className="text-[10px] text-[var(--text-muted)] font-sans">{label}</span>
               </span>
             ))}
@@ -164,7 +164,7 @@ export function SODetailPage() {
                 <ProgressRing value={summary.progress_pct} size={68} strokeWidth={6} />
                 <div>
                   <span className="text-xs font-bold text-[#B8943A] uppercase tracking-widest">{soNumber}</span>
-                  <h2 className="font-serif font-bold text-white text-base leading-snug max-w-xl">{soTitle}</h2>
+                  <h2 className="font-sans font-bold text-white text-base leading-snug max-w-xl">{soTitle}</h2>
                   <div className="flex gap-3 mt-1.5 flex-wrap">
                     {[
                       ['Completed',   summary.completed,   'text-green-400'],

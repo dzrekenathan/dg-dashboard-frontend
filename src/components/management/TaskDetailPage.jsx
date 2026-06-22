@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
+﻿import { useState, useMemo, useRef, useCallback, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, ChevronDown, ChevronUp, Zap, UserPlus, MessageSquare, Send } from 'lucide-react'
@@ -389,18 +389,18 @@ export function TaskDetailPage() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-start justify-between gap-3 flex-wrap">
                   <div>
-                    <span className="text-xs font-bold text-[#B8943A] uppercase tracking-widest">Task</span>
-                    <h2 className="font-serif font-bold text-white text-base leading-snug mt-0.5">{task.task}</h2>
-                    <p className="text-[10px] text-white/50 font-sans mt-0.5">{abbrev} — {areaLabel}</p>
+                    <span className="text-sm font-bold text-[#B8943A] uppercase tracking-widest">Task</span>
+                    <h2 className="font-sans font-bold text-white text-xl leading-snug mt-1">{task.task}</h2>
+                    <p className="text-xs text-white/50 font-sans mt-1">{abbrev} — {areaLabel}</p>
                   </div>
                 </div>
                 <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1">
-                  {task.timeframe && <span className="text-[10px] text-white/60 font-sans">{task.timeframe}</span>}
-                  {task.responsibility && <span className="text-[10px] text-white/60 font-sans">{task.responsibility}</span>}
-                  {task.budget && <span className="text-[10px] text-white/60 font-sans">{task.budget}</span>}
+                  {task.timeframe && <span className="text-xs text-white/60 font-sans">{task.timeframe}</span>}
+                  {task.responsibility && <span className="text-xs text-white/60 font-sans">{task.responsibility}</span>}
+                  {task.budget && <span className="text-xs text-white/60 font-sans">{task.budget}</span>}
                   {activities.length > 0 && (
-                    <span className="flex items-center gap-1 text-[10px] text-white/60 font-sans">
-                      <Zap size={10} className="text-[#B8943A]" /> {activities.length} Activities
+                    <span className="flex items-center gap-1 text-xs text-white/60 font-sans">
+                      <Zap size={11} className="text-[#B8943A]" /> {activities.length} Activities
                     </span>
                   )}
                 </div>

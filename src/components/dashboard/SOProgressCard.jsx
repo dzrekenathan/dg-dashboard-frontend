@@ -1,4 +1,4 @@
-import { ProgressRing } from './ProgressRing'
+﻿import { ProgressRing } from './ProgressRing'
 import { SO_ADINKRA, SO_DEPT_LOGOS } from '../../utils/helpers'
 
 const SO_BG = {
@@ -32,7 +32,7 @@ export function SOProgressCard({ summary }) {
             <span className="text-xs font-bold uppercase tracking-widest text-[var(--text-muted)]">
               {summary.so_number}
             </span>
-            <h3 className="font-serif font-semibold text-[var(--text)] text-base leading-tight mt-0.5">
+            <h3 className="font-sans font-semibold text-[var(--text)] text-base leading-tight mt-0.5">
               {summary.so_title || `Strategic Objective ${summary.so_number.slice(2)}`}
             </h3>
           </div>

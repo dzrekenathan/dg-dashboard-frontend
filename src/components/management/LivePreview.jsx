@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { useRealtimeSync } from '../../hooks/useRealtimeSync'
 import { KPISummaryBar } from '../dashboard/KPISummaryBar'
 import { StatusPieChart } from '../dashboard/StatusPieChart'
@@ -26,7 +26,7 @@ export function LivePreview() {
       {/* Preview header */}
       <div className="px-5 py-3 border-b border-[var(--line)] bg-[var(--bg)] flex items-center justify-between">
         <div>
-          <h2 className="font-serif font-semibold text-[var(--text)] text-sm">Live Dashboard Preview</h2>
+          <h2 className="font-sans font-semibold text-[var(--text)] text-sm">Live Dashboard Preview</h2>
           <p className="text-[10px] text-[var(--text-muted)] font-sans">Updates as you save — visible to Director General</p>
         </div>
         {lastSync && (
@@ -54,7 +54,7 @@ export function LivePreview() {
                       <div className="px-3 py-2.5 bg-[#0A1F3D] flex items-center justify-between">
                         <div className="min-w-0 flex-1 pr-2">
                           <span className="text-[10px] font-bold text-[#B8943A] uppercase tracking-widest">{s.so_number}</span>
-                          <h3 className="font-serif font-semibold text-white text-xs leading-snug line-clamp-2">{s.so_title}</h3>
+                          <h3 className="font-sans font-semibold text-white text-xs leading-snug line-clamp-2">{s.so_title}</h3>
                         </div>
                         <span className="text-sm font-bold text-[#B8943A] font-sans flex-shrink-0">{s.overall_progress_pct}%</span>
                       </div>
@@ -68,7 +68,7 @@ export function LivePreview() {
                           [s.at_risk,     'At Risk',     'text-red-500'],
                         ].map(([v, label, cls]) => (
                           <div key={label} className="flex flex-col items-center py-1.5 border-r border-[var(--line-soft)] last:border-r-0">
-                            <span className={`text-sm font-bold font-serif ${cls}`}>{v}</span>
+                            <span className={`text-sm font-bold font-sans ${cls}`}>{v}</span>
                             <span className="text-[9px] text-[var(--text-muted)] font-sans leading-tight text-center px-0.5">{label}</span>
                           </div>
                         ))}

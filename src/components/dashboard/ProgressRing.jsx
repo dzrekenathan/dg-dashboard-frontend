@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from 'react'
 
 export function ProgressRing({ value = 0, size = 80, strokeWidth = 7, label = '' }) {
   const [displayed, setDisplayed] = useState(0)
@@ -40,7 +40,7 @@ export function ProgressRing({ value = 0, size = 80, strokeWidth = 7, label = ''
         />
       </svg>
       <div className="absolute inset-0 flex flex-col items-center justify-center">
-        <span className="font-serif font-bold text-[#0A1F3D] dark:text-white" style={{ fontSize: size * 0.22 }}>
+        <span className="font-sans font-bold text-[#0A1F3D] dark:text-white" style={{ fontSize: size * 0.22 }}>
           {displayed}%
         </span>
       </div>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -29,7 +29,7 @@ export function Modal({ open, onClose, title, children }) {
             className="relative z-10 bg-[var(--bg)] rounded-2xl shadow-2xl border border-[var(--line)] max-w-lg w-full max-h-[80vh] flex flex-col"
           >
             <div className="flex items-center justify-between p-5 border-b border-[var(--line)]">
-              <h3 className="font-serif text-lg font-semibold text-[var(--text)]">{title}</h3>
+              <h3 className="font-sans text-lg font-semibold text-[var(--text)]">{title}</h3>
               <button
                 onClick={onClose}
                 className="p-1.5 rounded-lg hover:bg-[var(--bg-soft)] text-[var(--text-soft)] transition-colors"

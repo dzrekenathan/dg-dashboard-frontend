@@ -41,9 +41,6 @@ body {
   background: var(--bg);
 }
 
-h1, h2, h3, h4 {
-  font-family: 'Playfair Display', serif;
-}
 
 /* Scrollbar styling */
 ::-webkit-scrollbar { width: 6px; height: 6px; }

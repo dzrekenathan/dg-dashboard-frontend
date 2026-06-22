@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+﻿import { useState, useMemo } from 'react'
 import { Download, Search, X } from 'lucide-react'
 import { ExcelImporter } from './ExcelImporter'
 import { TaskUpdateForm } from './TaskUpdateForm'
@@ -43,7 +43,7 @@ export function EditPanel() {
         <div>
           <div className="flex items-center justify-between flex-wrap gap-2">
             <div>
-              <h2 className="font-serif font-bold text-white text-base">Management Update Panel</h2>
+              <h2 className="font-sans font-bold text-white text-base">Management Update Panel</h2>
               <p className="text-xs text-white/50 font-sans">{user?.name}</p>
             </div>
             <div className="flex gap-2">

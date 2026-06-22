@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+﻿import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Eye, EyeOff, ArrowRight } from 'lucide-react'
 import { Header } from '../layout/Header'
@@ -21,7 +21,7 @@ export function ManagementHome() {
         <div className="p-8 max-w-4xl mx-auto">
           {/* Page title */}
           <div className="mb-8 text-center">
-            <h2 className="font-serif text-2xl font-bold text-[var(--text)] mb-1">
+            <h2 className="font-sans text-2xl font-bold text-[var(--text)] mb-1">
               Strategic Objectives
             </h2>
             <p className="text-sm text-[var(--text-muted)] font-sans">
@@ -63,7 +63,7 @@ export function ManagementHome() {
                   <div className="p-5 flex items-start gap-4">
                     <ProgressRing value={s.overall_progress_pct} size={72} strokeWidth={6} className="flex-shrink-0" />
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-serif font-semibold text-[var(--text)] text-sm leading-snug mb-3 line-clamp-3">
+                      <h3 className="font-sans font-semibold text-[var(--text)] text-sm leading-snug mb-3 line-clamp-3">
                         {s.so_title || SO_SHORT_TITLES[s.so_number]}
                       </h3>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-1.5">
@@ -74,7 +74,7 @@ export function ManagementHome() {
                           ['At Risk',     s.at_risk,     'text-red-500 dark:text-red-400'],
                         ].map(([label, val, cls]) => (
                           <div key={label} className="flex items-baseline gap-1.5">
-                            <span className={`text-sm font-bold font-serif ${cls}`}>{val}</span>
+                            <span className={`text-sm font-bold font-sans ${cls}`}>{val}</span>
                             <span className="text-[10px] text-[var(--text-muted)] font-sans leading-none">{label}</span>
                           </div>
                         ))}

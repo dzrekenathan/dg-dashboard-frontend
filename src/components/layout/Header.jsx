@@ -1,4 +1,4 @@
-import { LogOut, PrinterIcon } from 'lucide-react'
+﻿import { LogOut, PrinterIcon } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { ThemeToggle } from './ThemeToggle'
 import { useNavigate } from 'react-router-dom'
@@ -26,7 +26,7 @@ export function Header({ title = 'Strategic Objectives Dashboard', showPrint = f
           onError={e => { e.currentTarget.style.display = 'none' }}
         />
         <div>
-          <h1 className="font-serif text-lg font-bold text-white leading-tight">{title}</h1>
+          <h1 className="font-sans text-lg font-bold text-white leading-tight">{title}</h1>
           <p className="text-xs text-white/50 font-sans">Council for Legal Education and Training</p>
         </div>
       </div>

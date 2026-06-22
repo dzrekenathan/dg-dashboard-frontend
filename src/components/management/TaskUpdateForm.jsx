@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+﻿import { useState, useEffect, useRef, useCallback } from 'react'
 import { ChevronDown, ChevronUp } from 'lucide-react'
 import useDataStore from '../../store/useDataStore'
 import { useAuth } from '../../context/AuthContext'
@@ -63,7 +63,7 @@ export function TaskUpdateForm({ task }) {
       {/* Card header */}
       <div className="px-4 pt-4 pb-3">
         <p className="text-xs italic text-[#1F4480] dark:text-navy-light mb-0.5 font-sans">{task.thematic_area}</p>
-        <h4 className="font-serif font-semibold text-[var(--text)] text-sm leading-snug">{task.task}</h4>
+        <h4 className="font-sans font-semibold text-[var(--text)] text-sm leading-snug">{task.task}</h4>
         {task.reference_numbers && (
           <p className="font-mono text-[10px] text-[var(--text-muted)] mt-1">{task.reference_numbers}</p>
         )}
