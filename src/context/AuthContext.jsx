@@ -22,7 +22,7 @@ export function AuthProvider({ children }) {
     if (!token) { setUser(null); return }
     api.get('/auth/me')
       .then(data => {
-        const session = { userId: data.id, role: data.role, name: data.name, email: data.email }
+        const session = { userId: data.id, role: data.role, name: data.name, email: data.email, directorate: data.directorate ?? null }
         localStorage.setItem(SESSION_KEY, JSON.stringify(session))
         setUser(session)
       })
@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
     try {
       const data = await api.post('/auth/login', { email, password })
       localStorage.setItem(TOKEN_KEY, data.access_token)
-      const session = { userId: null, role: data.role, name: data.name, email: data.email }
+      const session = { userId: null, role: data.role, name: data.name, email: data.email, directorate: data.directorate ?? null }
       localStorage.setItem(SESSION_KEY, JSON.stringify(session))
       setUser(session)
       return true
