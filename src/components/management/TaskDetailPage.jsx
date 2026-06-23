@@ -47,6 +47,8 @@ function relTime(iso) {
 function ActivityCard({ activity, taskId, tracking, onTrackingChange }) {
   const [open, setOpen] = useState(false)
   const [commentText, setCommentText] = useState('')
+  const [saving, setSaving] = useState(false)
+  const [savingStatus, setSavingStatus] = useState(null)
   const assignRef = useRef(null)
   const { user } = useAuth()
   const toast = useToast()
@@ -63,16 +65,21 @@ function ActivityCard({ activity, taskId, tracking, onTrackingChange }) {
   }, [tracking?.progress_pct])
 
   const patch = useCallback(async (body) => {
+    setSaving(true)
     try {
       const ref = encodeURIComponent(activity.ref || activity.title.slice(0, 20))
       const updated = await api.patch(`/activity-tracking/${taskId}/${ref}`, body)
       onTrackingChange(activity.ref, updated)
     } catch {
       toast('Failed to save', 'error', 2500)
+    } finally {
+      setSaving(false)
+      setSavingStatus(null)
     }
   }, [activity.ref, activity.title, taskId, onTrackingChange, toast])
 
   const handleStatusChange = (s) => {
+    setSavingStatus(s)
     if (s === 'Completed') {
       setLocalProgress(100)
       patch({ status: s, progress_pct: 100 })
@@ -169,19 +176,24 @@ function ActivityCard({ activity, taskId, tracking, onTrackingChange }) {
                 <div className="flex gap-2 flex-wrap">
                   {ACTIVITY_STATUSES.map(s => {
                     const active = status === s
+                    const isLoading = savingStatus === s
                     const c = ACTIVITY_COLORS[s]
                     return (
                       <button
                         key={s}
                         onClick={() => handleStatusChange(s)}
-                        className="flex-1 min-w-[80px] text-xs font-semibold font-sans py-2 px-3 rounded-lg border-2 transition-all duration-200"
+                        disabled={saving}
+                        className="flex-1 min-w-[80px] text-xs font-semibold font-sans py-2 px-3 rounded-lg border-2 transition-all duration-200 flex items-center justify-center gap-1.5 disabled:cursor-not-allowed"
                         style={{
                           backgroundColor: active ? c.bg : 'transparent',
                           borderColor: active ? c.border : 'var(--line)',
                           color: active ? c.text : 'var(--text-muted)',
+                          opacity: saving && !isLoading ? 0.45 : 1,
                         }}
                       >
-                        {s}
+                        {isLoading
+                          ? <span className="inline-block w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                          : s}
                       </button>
                     )
                   })}
@@ -308,7 +320,8 @@ export function TaskDetailPage() {
   const navigate = useNavigate()
   const toast    = useToast()
 
-  const tasks   = useDataStore(s => s.tasks)
+  const tasks      = useDataStore(s => s.tasks)
+  const updateTask = useDataStore(s => s.updateTask)
   const soTasks = useMemo(() => tasks.filter(t => t.so_number === soNumber), [tasks, soNumber])
   const task    = useMemo(() => tasks.find(t => t.id === taskId), [tasks, taskId])
 
@@ -327,6 +340,12 @@ export function TaskDetailPage() {
   // ── Activity tracking state ──────────────────────────────────────────────────
   const [trackingMap, setTrackingMap] = useState({})  // { activity_ref: ActivityTrackingOut }
 
+  // Stable refs so handleTrackingChange can read latest values without stale closure
+  const activitiesRef = useRef([])
+  const trackingMapRef = useRef({})
+  useEffect(() => { activitiesRef.current = activities }, [activities])
+  useEffect(() => { trackingMapRef.current = trackingMap }, [trackingMap])
+
   useEffect(() => {
     if (!taskId) return
     api.get(`/activity-tracking/${taskId}`)
@@ -340,7 +359,23 @@ export function TaskDetailPage() {
 
   const handleTrackingChange = useCallback((ref, updated) => {
     setTrackingMap(prev => ({ ...prev, [ref]: updated }))
-  }, [])
+
+    // Derive task-level status + progress from the new aggregate and push to store
+    const next = { ...trackingMapRef.current, [ref]: updated }
+    const acts = activitiesRef.current
+    if (acts.length === 0) return
+
+    const sum = acts.reduce((acc, act) => acc + (next[act.ref]?.progress_pct ?? 0), 0)
+    const progress = Math.round(sum / acts.length)
+    const statuses = acts.map(act => next[act.ref]?.status || 'Not Started')
+
+    let taskStatus = 'Not Started'
+    if (statuses.every(s => s === 'Completed'))                                        taskStatus = 'Completed'
+    else if (statuses.some(s => s === 'At Risk'))                                      taskStatus = 'At Risk'
+    else if (statuses.some(s => ['In Progress', 'Advanced', 'Early', 'Completed'].includes(s))) taskStatus = 'In Progress'
+
+    updateTask(taskId, { progress_pct: progress, status: taskStatus })
+  }, [taskId, updateTask])
 
   // Average progress across all parsed activities (0 for untracked ones)
   const overallProgress = useMemo(() => {

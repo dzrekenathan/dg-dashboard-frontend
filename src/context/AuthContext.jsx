@@ -40,9 +40,22 @@ export function AuthProvider({ children }) {
       const session = { userId: null, role: data.role, name: data.name, email: data.email, directorate: data.directorate ?? null }
       localStorage.setItem(SESSION_KEY, JSON.stringify(session))
       setUser(session)
-      return true
-    } catch {
-      return false
+      return { ok: true }
+    } catch (err) {
+      return { ok: false, message: err.message || 'Incorrect email or password' }
+    }
+  }, [])
+
+  const register = useCallback(async (name, email, password, directorate) => {
+    try {
+      const data = await api.post('/auth/register', { name, email, password, directorate })
+      localStorage.setItem(TOKEN_KEY, data.access_token)
+      const session = { userId: null, role: data.role, name: data.name, email: data.email, directorate: data.directorate ?? null }
+      localStorage.setItem(SESSION_KEY, JSON.stringify(session))
+      setUser(session)
+      return { ok: true }
+    } catch (err) {
+      return { ok: false, message: err.message || 'Registration failed' }
     }
   }, [])
 
@@ -53,7 +66,7 @@ export function AuthProvider({ children }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

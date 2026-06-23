@@ -1,5 +1,5 @@
 ﻿import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { Eye, EyeOff, ShieldCheck, BookOpen, Users } from 'lucide-react'
 
@@ -18,10 +18,9 @@ export function LoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
-    await new Promise(r => setTimeout(r, 400))
-    const ok = await login(email, password)
+    const result = await login(email, password)
     setLoading(false)
-    if (!ok) { setError('Invalid email or password. Please try again.'); return }
+    if (!result.ok) { setError(result.message || 'Invalid email or password. Please try again.'); return }
     const session = JSON.parse(localStorage.getItem('clet_session') || '{}')
     navigate(session.role === 'management' ? '/management' : '/dashboard', { replace: true })
   }
@@ -163,16 +162,21 @@ export function LoginPage() {
               </div>
             </div>
 
-            {/* Remember me */}
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={remember}
-                onChange={e => setRemember(e.target.checked)}
-                className="w-4 h-4 rounded border-[#D1D5DB] text-[#0A1F3D] focus:ring-[#0A1F3D] accent-[#0A1F3D]"
-              />
-              <span className="text-xs text-[#6B7280] dark:text-white/50 font-sans">Keep me signed in</span>
-            </label>
+            {/* Remember me + Forgot password */}
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={remember}
+                  onChange={e => setRemember(e.target.checked)}
+                  className="w-4 h-4 rounded border-[#D1D5DB] text-[#0A1F3D] focus:ring-[#0A1F3D] accent-[#0A1F3D]"
+                />
+                <span className="text-xs text-[#6B7280] dark:text-white/50 font-sans">Keep me signed in</span>
+              </label>
+              <Link to="/forgot-password" className="text-xs text-[#0A1F3D] dark:text-[#B8943A] font-semibold hover:underline font-sans">
+                Forgot password?
+              </Link>
+            </div>
 
             {/* Error */}
             {error && (
@@ -197,8 +201,16 @@ export function LoginPage() {
             </button>
           </form>
 
+          {/* Sign-up link */}
+          <p className="text-center text-xs text-[#6B7280] dark:text-white/40 font-sans mt-5">
+            Don't have an account?{' '}
+            <Link to="/signup" className="text-[#0A1F3D] dark:text-[#B8943A] font-semibold hover:underline">
+              Sign up
+            </Link>
+          </p>
+
           {/* Footer note */}
-          <div className="flex items-center justify-center gap-1.5 mt-6 text-[10px] text-[#9CA3AF] dark:text-white/30 font-sans">
+          <div className="flex items-center justify-center gap-1.5 mt-4 text-[10px] text-[#9CA3AF] dark:text-white/30 font-sans">
             <ShieldCheck size={11} className="flex-shrink-0" />
             Access attempts and activity may be logged.
           </div>

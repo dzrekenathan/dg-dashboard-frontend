@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
 import { ToastProvider } from './components/shared/Toast'
 import { LoginPage } from './components/auth/LoginPage'
+import { SignUpPage } from './components/auth/SignUpPage'
+import { ForgotPasswordPage } from './components/auth/ForgotPasswordPage'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { DGDashboard } from './components/dashboard/DGDashboard'
 import { DGSODetailPage } from './components/dashboard/DGSODetailPage'
@@ -27,6 +29,8 @@ export default function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
 
             <Route path="/dashboard" element={
               <ProtectedRoute allowedRoles={['dg', 'management']}>
