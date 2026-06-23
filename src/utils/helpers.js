@@ -106,3 +106,21 @@ export function formatDateTime(iso) {
     hour: '2-digit', minute: '2-digit',
   })
 }
+
+export function parseDirectorateFromArea(areaName) {
+  const m = areaName?.match(/\(([^)]+)\)\s*$/)
+  return m ? m[1].trim() : null
+}
+
+export const DIRECTORATE_NAMES = {
+  GSL:   'Ghana School of Law',
+  CDT:   'Curriculum Development & Training',
+  AQAI:  'Accreditation, Quality Assurance & Inspectorate',
+  LRKS:  'Learning, Research & Knowledge Services',
+  DTI:   'Digital Transformation & Innovation',
+  CCP:   'Communications, Comms & Partnerships',
+  'P&C': 'People & Culture',
+  RMF:   'Resource Mobilisation & Finance',
+  'SF&L':'Safety, Facilities & Logistics',
+  'C&A': 'Compliance & Audit',
+}
