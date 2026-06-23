@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { api } from '../api/client'
+import { parseDirectorateFromArea, SO_SHORT_TITLES } from '../utils/helpers'
 
 const DEFAULT_VISIBILITY = { SO1: true, SO2: true, SO3: true, SO4: true }
 
@@ -114,6 +115,44 @@ const useDataStore = create((set, get) => ({
           : 0,
       }
     })
+  },
+
+  getDirectorateAreas: (directorate) => {
+    const tasks = get().tasks
+    const result = []
+
+    for (const so of ['SO1', 'SO2', 'SO3', 'SO4']) {
+      const soTasks = tasks.filter(t => t.so_number === so)
+      const allAreas = [...new Set(soTasks.map(t => t.thematic_area).filter(Boolean))]
+        .sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0))
+
+      const dirAreas = allAreas
+        .map((area, idx) => {
+          if (parseDirectorateFromArea(area) !== directorate) return null
+          const areaTasks = soTasks.filter(t => t.thematic_area === area)
+          return {
+            area,
+            idx,
+            total:       areaTasks.length,
+            completed:   areaTasks.filter(t => t.status === 'Completed').length,
+            in_progress: areaTasks.filter(t => t.status === 'In Progress').length,
+            at_risk:     areaTasks.filter(t => t.status === 'At Risk').length,
+            progress_pct: areaTasks.length
+              ? Math.round(areaTasks.reduce((s, t) => s + (t.progress_pct || 0), 0) / areaTasks.length)
+              : 0,
+          }
+        })
+        .filter(Boolean)
+
+      if (dirAreas.length > 0) {
+        result.push({
+          so_number: so,
+          so_title: soTasks[0]?.so_title || SO_SHORT_TITLES[so] || so,
+          areas: dirAreas,
+        })
+      }
+    }
+    return result
   },
 }))
 
