@@ -5,7 +5,8 @@ import { ArrowLeft, Upload, Download, Eye, EyeOff, ArrowRight, CheckCircle2, Ale
 import { Header } from '../layout/Header'
 import { ProgressRing } from '../dashboard/ProgressRing'
 import useDataStore from '../../store/useDataStore'
-import { SO_SHORT_TITLES, getAreaAbbrev } from '../../utils/helpers'
+import { SO_SHORT_TITLES, getAreaAbbrev, parseDirectorateFromArea } from '../../utils/helpers'
+import { useAuth } from '../../context/AuthContext'
 import { api } from '../../api/client'
 import { useToast } from '../shared/Toast'
 import { useRealtimeSync } from '../../hooks/useRealtimeSync'
@@ -74,6 +75,7 @@ function AreaCard({ group, idx, soNumber, onClick }) {
 // ── Main page ──────────────────────────────────────────────────────────────────
 export function SODetailPage() {
   useRealtimeSync()
+  const { user } = useAuth()
   const { soNumber }       = useParams()
   const navigate           = useNavigate()
   const toast              = useToast()
@@ -91,14 +93,15 @@ export function SODetailPage() {
   const thematicGroups = useMemo(() => {
     const areas = [...new Set(soTasks.map(t => t.thematic_area).filter(Boolean))]
       .sort((a, b) => (parseInt(a) || 0) - (parseInt(b) || 0))
-    return areas.map((area, idx) => {
+
+    const allGroups = areas.map((area, idx) => {
       const areaTasks = soTasks.filter(t => t.thematic_area === area)
       return {
         area,
         idx,
-        abbrev: getAreaAbbrev(area),
-        tasks: areaTasks,
-        total: areaTasks.length,
+        abbrev:      getAreaAbbrev(area),
+        tasks:       areaTasks,
+        total:       areaTasks.length,
         completed:   areaTasks.filter(t => t.status === 'Completed').length,
         in_progress: areaTasks.filter(t => t.status === 'In Progress').length,
         not_started: areaTasks.filter(t => t.status === 'Not Started').length,
@@ -108,7 +111,12 @@ export function SODetailPage() {
           : 0,
       }
     })
-  }, [soTasks])
+
+    if (user?.role === 'management' && user?.directorate) {
+      return allGroups.filter(g => parseDirectorateFromArea(g.area) === user.directorate)
+    }
+    return allGroups
+  }, [soTasks, user?.role, user?.directorate])
 
   const summary = useMemo(() => {
     const total = soTasks.length
